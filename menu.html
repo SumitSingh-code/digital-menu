@@ -1,0 +1,1265 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ashoka Hotel & Restaurant | Premium Menu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Josefin+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* === VARIABLES & THEMING === */
+        :root {
+            --gold-main: #c9a84c;
+            --gold-light: #e8c87a;
+            --gold-dark: #9a7730;
+            --bg-dark: #0a0a0a;
+            --text-main: #ffffff;
+            --text-muted: #cccccc;
+            --glass-bg: rgba(25, 25, 25, 0.6);
+            --glass-border: rgba(201, 168, 76, 0.2);
+            --nav-bg: rgba(10, 10, 10, 0.9);
+            --danger: #e74c3c;
+            --veg: #2ecc71;
+            --font-heading: 'Cormorant Garamond', serif;
+            --font-body: 'Josefin Sans', sans-serif;
+            --transition: all 0.3s ease;
+        }
+
+        [data-theme="light"] {
+            --bg-dark: #f8f9fa;
+            --text-main: #111111;
+            --text-muted: #555555;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(201, 168, 76, 0.4);
+            --nav-bg: rgba(248, 249, 250, 0.95);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            font-family: var(--font-body);
+            overflow-x: hidden;
+            transition: var(--transition);
+        }
+
+        /* === NAVBAR === */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border-bottom: 1px solid var(--glass-border);
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 5%;
+        }
+
+        .logo {
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--gold-main);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-btn {
+            background: none;
+            border: 1px solid var(--gold-main);
+            color: var(--gold-main);
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: var(--font-body);
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-btn:hover {
+            background: var(--gold-main);
+            color: var(--bg-dark);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.4);
+        }
+
+        .search-container {
+            position: relative;
+        }
+
+        .search-input {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-family: var(--font-body);
+            outline: none;
+            width: 200px;
+            transition: var(--transition);
+        }
+
+        .search-input:focus {
+            border-color: var(--gold-main);
+            box-shadow: 0 0 10px rgba(201, 168, 76, 0.2);
+        }
+
+        /* === CATEGORY TABS === */
+        .category-tabs {
+            position: fixed;
+            top: 70px;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(10px);
+            padding: 10px 5%;
+            display: flex;
+            gap: 15px;
+            overflow-x: auto;
+            white-space: nowrap;
+            z-index: 999;
+            scrollbar-width: none;
+            border-bottom: 1px solid var(--glass-border);
+        }
+        .category-tabs::-webkit-scrollbar { display: none; }
+
+        .tab-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-family: var(--font-heading);
+            font-size: 1.2rem;
+            cursor: pointer;
+            padding: 5px 10px;
+            position: relative;
+            transition: var(--transition);
+        }
+
+        .tab-btn.active {
+            color: var(--gold-main);
+        }
+
+        .tab-btn.active::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--gold-main);
+            box-shadow: 0 0 8px var(--gold-main);
+        }
+
+        /* === MAIN CONTENT === */
+        main {
+            padding: 140px 5% 100px 5%;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .category-section {
+            margin-bottom: 60px;
+            scroll-margin-top: 140px;
+        }
+
+        .category-title {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            color: var(--gold-main);
+            text-align: center;
+            margin-bottom: 30px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+        }
+
+        .category-title::after {
+            content: '❖';
+            display: block;
+            font-size: 1.2rem;
+            color: var(--gold-dark);
+            margin-top: 5px;
+        }
+
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 25px;
+        }
+
+        /* === MENU CARD (GLASSMORPHISM) === */
+        .glass-card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.2);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(201, 168, 76, 0.15);
+            border-color: var(--gold-main);
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+
+        .item-name-box {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .veg-indicator {
+            width: 14px;
+            height: 14px;
+            border: 1px solid var(--veg);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 2px;
+        }
+        .veg-indicator::after {
+            content: '';
+            width: 6px;
+            height: 6px;
+            background: var(--veg);
+            border-radius: 50%;
+        }
+
+        .item-name {
+            font-family: var(--font-heading);
+            font-size: 1.4rem;
+            font-weight: 600;
+            color: var(--text-main);
+        }
+
+        .item-price {
+            color: var(--gold-main);
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .item-desc {
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            margin-bottom: 20px;
+            line-height: 1.4;
+            flex-grow: 1;
+        }
+
+        .dual-price-select {
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--gold-main);
+            padding: 5px;
+            border-radius: 4px;
+            font-family: var(--font-body);
+            margin-bottom: 15px;
+            width: 100%;
+            outline: none;
+        }
+        .dual-price-select option {
+            background: var(--bg-dark);
+            color: var(--text-main);
+        }
+
+        .item-actions {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid var(--glass-border);
+            padding-top: 15px;
+        }
+
+        .qty-control {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.2);
+            border-radius: 20px;
+            padding: 5px 10px;
+            border: 1px solid var(--glass-border);
+        }
+
+        .qty-btn {
+            background: none;
+            border: none;
+            color: var(--gold-main);
+            font-size: 1.2rem;
+            cursor: pointer;
+            width: 25px;
+            height: 25px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .qty-btn:hover {
+            background: var(--gold-main);
+            color: var(--bg-dark);
+        }
+
+        .qty-input {
+            background: transparent;
+            border: none;
+            color: var(--text-main);
+            width: 30px;
+            text-align: center;
+            font-family: var(--font-body);
+            font-weight: 600;
+        }
+
+        .add-btn {
+            background: var(--gold-main);
+            color: #000;
+            border: none;
+            padding: 8px 20px;
+            border-radius: 20px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .add-btn:hover {
+            background: var(--gold-light);
+            box-shadow: 0 0 15px rgba(201, 168, 76, 0.5);
+        }
+
+        /* === CART SYSTEM === */
+        .cart-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 65px;
+            height: 65px;
+            background: var(--gold-main);
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            box-shadow: 0 5px 20px rgba(201, 168, 76, 0.4);
+            z-index: 1000;
+            transition: var(--transition);
+        }
+
+        .cart-fab:hover {
+            transform: scale(1.05);
+            background: var(--gold-light);
+        }
+
+        .cart-fab svg {
+            width: 28px;
+            height: 28px;
+            fill: #000;
+        }
+
+        .cart-badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--danger);
+            color: #fff;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            border: 2px solid var(--bg-dark);
+        }
+
+        .cart-panel {
+            position: fixed;
+            top: 0;
+            right: -450px;
+            width: 100%;
+            max-width: 400px;
+            height: 100vh;
+            background: var(--glass-bg);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-left: 1px solid var(--glass-border);
+            z-index: 1001;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+            transition: right 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        }
+
+        .cart-panel.active {
+            right: 0;
+        }
+
+        .cart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 15px;
+            margin-bottom: 20px;
+        }
+
+        .cart-title {
+            font-family: var(--font-heading);
+            color: var(--gold-main);
+            font-size: 2rem;
+        }
+
+        .close-cart {
+            background: none;
+            border: none;
+            color: var(--text-main);
+            font-size: 2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .close-cart:hover {
+            color: var(--danger);
+        }
+
+        .cart-items {
+            flex-grow: 1;
+            overflow-y: auto;
+            padding-right: 10px;
+        }
+        .cart-items::-webkit-scrollbar { width: 5px; }
+        .cart-items::-webkit-scrollbar-thumb { background: var(--gold-main); border-radius: 5px; }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px dashed var(--glass-border);
+        }
+
+        .cart-item-details {
+            flex-grow: 1;
+        }
+
+        .cart-item-name {
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .cart-item-price {
+            color: var(--gold-main);
+            font-size: 0.9rem;
+        }
+
+        .remove-btn {
+            background: none;
+            border: none;
+            color: var(--danger);
+            cursor: pointer;
+            font-size: 0.8rem;
+            margin-top: 5px;
+            text-decoration: underline;
+        }
+
+        .cart-footer {
+            border-top: 1px solid var(--glass-border);
+            padding-top: 20px;
+            margin-top: 20px;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            font-family: var(--font-heading);
+            font-size: 1.8rem;
+            color: var(--gold-main);
+            margin-bottom: 20px;
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: var(--gold-main);
+            color: #000;
+            border: none;
+            padding: 15px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .checkout-btn:hover {
+            background: var(--gold-light);
+            box-shadow: 0 0 20px rgba(201, 168, 76, 0.4);
+        }
+
+        /* === MODAL === */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            backdrop-filter: blur(5px);
+            z-index: 2000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .modal-overlay.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 40px;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 450px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            position: relative;
+        }
+
+        .modal-title {
+            font-family: var(--font-heading);
+            color: var(--gold-main);
+            font-size: 2.2rem;
+            margin-bottom: 25px;
+            text-align: center;
+        }
+
+        .input-group {
+            margin-bottom: 20px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: var(--text-muted);
+        }
+
+        .input-group input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--glass-border);
+            color: var(--text-main);
+            border-radius: 6px;
+            font-family: var(--font-body);
+            outline: none;
+            transition: var(--transition);
+        }
+
+        .input-group input:focus {
+            border-color: var(--gold-main);
+        }
+
+        .order-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 30px;
+        }
+
+        .whatsapp-btn, .email-btn {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 6px;
+            font-family: var(--font-body);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .whatsapp-btn {
+            background: #25D366;
+            color: #fff;
+        }
+        .whatsapp-btn:hover { background: #20bd5a; box-shadow: 0 0 15px rgba(37, 211, 102, 0.4); }
+
+        .email-btn {
+            background: transparent;
+            color: var(--gold-main);
+            border: 1px solid var(--gold-main);
+        }
+        .email-btn:hover { background: var(--gold-main); color: #000; }
+
+        .close-modal {
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            background: none;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* === RESPONSIVE === */
+        @media (max-width: 768px) {
+            header { flex-direction: column; gap: 15px; padding: 15px; }
+            .search-input { width: 100%; }
+            .category-tabs { top: 120px; }
+            main { padding-top: 190px; }
+            .cart-panel { width: 100%; max-width: 100%; right: -100%; }
+            .cart-fab { bottom: 20px; right: 20px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21h14"/><path d="M6 21v-4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v4"/><path d="M12 7v4"/><path d="M12 3v.01"/><path d="M16 11a4 4 0 0 0-8 0"/></svg>
+            Ashoka
+        </div>
+        <div class="nav-actions">
+            <div class="search-container">
+                <input type="text" id="search-bar" class="search-input" placeholder="Search menu..." onkeyup="filterMenu()">
+            </div>
+            <button class="nav-btn" onclick="toggleTheme()">Theme 🌓</button>
+            <a href="index.html" style="text-decoration: none;"><button class="nav-btn">Home</button></a>
+        </div>
+    </header>
+
+    <div class="category-tabs" id="category-tabs">
+        </div>
+
+    <main id="menu-container">
+        </main>
+
+    <div class="cart-fab" onclick="toggleCart()">
+        <svg viewBox="0 0 24 24"><path d="M7 18c-1.1 0-1.99.9-1.99 2S5.9 22 7 22s2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12.9-1.63h7.45c.75 0 1.41-.41 1.75-1.03l3.58-6.49c.08-.14.12-.31.12-.48 0-.55-.45-1-1-1H5.21l-.94-2H1zm16 16c-1.1 0-1.99.9-1.99 2s.89 2 1.99 2 2-.9 2-2-.9-2-2-2z"/></svg>
+        <span class="cart-badge" id="cart-count">0</span>
+    </div>
+
+    <div class="cart-panel" id="cart-panel">
+        <div class="cart-header">
+            <h2 class="cart-title">Your Order</h2>
+            <button class="close-cart" onclick="toggleCart()">&times;</button>
+        </div>
+        <div class="cart-items" id="cart-items-container">
+            </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span id="cart-total-price">₹0</span>
+            </div>
+            <button class="checkout-btn" onclick="openCheckoutModal()">Place Order</button>
+        </div>
+    </div>
+
+    <div class="modal-overlay" id="checkout-modal">
+        <div class="modal-content">
+            <button class="close-modal" onclick="closeCheckoutModal()">&times;</button>
+            <h2 class="modal-title">Order Details</h2>
+            <div class="input-group">
+                <label for="cust-name">Full Name</label>
+                <input type="text" id="cust-name" placeholder="Enter your name" required>
+            </div>
+            <div class="input-group">
+                <label for="cust-table">Table / Room Number</label>
+                <input type="text" id="cust-table" placeholder="E.g. Table 4 or Room 102" required>
+            </div>
+            <div class="order-actions">
+                <button class="whatsapp-btn" onclick="submitOrder('whatsapp')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51a12.8 12.8 0 0 0-.57-.01c-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413Z"/></svg>
+                    Order via WhatsApp
+                </button>
+                <button class="email-btn" onclick="submitOrder('email')">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+                    Order via Email
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // === RAW DATA INJECTION ===
+        const rawData = `SOUP
+Hot & Sour Soup - 120 
+Lemon Coriander Soup - 120 
+Mushroom Soup - 120 
+Sweet Corn Soup - 120 
+Tomato Soup - 120 
+Veg Clear Soup - 120 
+Tomato Basil Soup - 120 
+Mushroom Soup (Ramen) - 120 
+Manchow Soup - 120 
+DESI CHAKHNA
+Nachos with Cheese - 235 
+Kurkuri Corns with Cheese - 295 
+Masala Papad - 155 
+Fried Papad - 75 
+Roasted Papad - 65 
+French Fries - 155 
+Peri Peri Fries - 175 
+Loaded Cheesy Fries - 225 
+Cone Papad Chaat - 195 
+Fried Potato Chaat - 175 
+Paneer Pakora - 225 
+Paneer Cutlet - 335 
+Mix Pakora - 175 
+Plain Nachos - 135 
+Chana Chaat - 205 
+Fried Peanut Masala - 205 
+Fried Peanut with Cheese - 225 
+SANDWICH
+Coleslaw Sandwich - 175 
+Club Sandwich - 225 
+Cheese Sandwich - 185 
+Grilled Sandwich - 205 
+Paneer Sandwich - 235 
+Tomato Sandwich - 165 
+Mexican Cheesy Sandwich - 195 
+BURGERS
+Mexican Burger - 110 
+Paneer Tikka Burger - 120 
+Crispy Paneer Burger - 130 
+Aloo Classic Burger - 80 
+Aloo Cheese Burger - 100 
+Spl. Ashoka King Burger - 150 
+Burger + Fries - 180 
+WRAPS
+Spl. Paneer Tikka Wrap - 200 
+Aloo Patty Wrap - 120 
+Veg Haryali Wrap - 180 
+Corn & Peas Wrap - 150 
+Spl. Ashoka Wrap - 220 
+SALADS
+Green Salad - 80 
+Kachumber Salad - 120 
+Russian Salad - 120 
+Greek Salad - 180 
+Garlic Corn Salad - 195 
+Cucumber Mint Salad - 185 
+Oriental Salad - 185 
+Caesar Salad - 285 
+High Protein Salad - 295 
+PIZZA
+Ashoka Special - 00 
+Margarita Pizza - 00 
+Paneer Tikka Pizza - 00 
+Paneer Hawaiian Pizza - 00 
+Farmer's Choice Pizza - 00 
+Sweet Corn Pizza - 00 
+Cheese Tomato Pizza - 00 
+Mexican Pizza - 00 
+Mushroom Pizza - 00 
+Thin Crust - 355 
+Cheese Burst - 425 
+TANDOORI STARTERS
+Tandoori Platter - 350 
+Veg Sheekh Kabab - 200 
+Paneer Haryali Tikka - 240 
+Malai Paneer Tikka - 260 
+Paneer Achari Tikka - 260 
+Afghani Tikka - 250 
+Bharwa Mushroom Tikka - 00 
+Paneer Pudina Tikka - 00 
+Paneer Tikka - 240 
+Garlic Paneer Tikka - 250 
+Tandoori Soya Chaap - 250 
+Achari Chaap - 250 
+Malai Chaap - 220 
+Mushroom Tikka - 240 
+Paneer Lemon Tikka - 240 
+CONTINENTAL STARTERS
+Cheese Snow Balls - 345 
+Cottage Cheese Blue - 355 
+Mushroom Day Night - 335 
+Ching Chang Roll - 315 
+Veg Quesadilla - 255 
+Cheese KFC - 325 
+Italian Potato Rolls - 255 
+Mushroom Duplex - 315 
+Spinach Corn Pocket Roll - 295 
+Mushroom Bombs - 285 
+Grilled Cottage Cheese - 355 
+Cheese Cigar Roll - 305 
+Onion Rings - 235 
+CONTINENTAL MAIN COURSE
+Baked Vegetables - 395 
+Vegetable Jalapeno - 375 
+Baked Mushroom - 395 
+Mushroom Stroganoff - 355 
+Veg Romeo - 325 
+Lasagna - 455 
+Veg O Graten - 425 
+SIZZLER
+Veg Continental Sizzler - 455 
+Mushroom Stir Sizzler - 495 
+CHINESE MAIN COURSE
+Chilli Paneer Gravy - 355 
+American Chop Suey - 275 
+Veg Manchurian Gravy - 265 
+Chilli Soya Gravy - 295 
+Chinese Sizzler - 445 
+NOODLES & RICE
+Veg Noodles - 195 
+Hakka Noodles - 235 
+Garlic Noodles - 205 
+Chilli Garlic Noodles - 205 
+Chilli Noodles - 205 
+Singapore Noodle - 235 
+Veg Fried Rice - 215 
+SCHEZWAN Fried Rice - 215 
+Mushroom Fried Rice - 215 
+Chilli Garlic Fried Rice - 215 
+CHINESE SNACKS
+Dahi Se Sholey - 270 
+Veg Cutlet (8 pcs) - 200 
+Dahi Ke Kabab (8 pcs) - 280 
+Haryali Kabab (8 pcs) - 200 
+Stuff Cheese Corn Tikki - 250 
+CHINESE STARTERS
+Honey Chilli Potato - 225 
+Chilli Potato - 200 
+Veg Spring Rolls - 225 
+Chilli Paneer Dry - 320 
+Veg Manchurian Dry - 240 
+Chestnut Water Dumplings - 200 
+Momos (Veg/Cheese) - 270 
+Crispy Corn Kernels - 280 
+Chilli Mushroom Dry - 270 
+Chilli Baby Corn - 280 
+Chilli Soya Dry - 270 
+Crispy Veg Salt & Pepper - 260 
+GARLIC BREAD
+Garlic Bread - 00 
+Garlic Bread - 245 
+Garlic Bread Stuffed - 325 
+PASTA
+White Sauce Pasta - 200 
+Red Sauce Pasta - 200 
+Mix Sauce Pasta - 210 
+MAIN COURSE (DAL)
+Dal Makhani - 250 / 150 
+Dal Tadka - 200 / 130 
+Dal Handi - 230 / 140 
+Rajma Rasile - 200 / 120 
+Chana Pindi - 250 / 170 
+Chana Masala - 240 / 160 
+MAIN COURSE (PANEER)
+Paneer Makhani - 250 / 170 
+Paneer Butter Masala - 300 / 190 
+Kadhai Paneer - 300 / 180 
+Paneer Bhurji - 300 / 180 
+Paneer Lababdar - 300 / 180 
+Paneer Pasanda - 300 / 180 
+Paneer Tikka Butter Masala - 300 / 180 
+Shahi Paneer - 300 / 180 
+Palak Paneer - 300 / 180 
+Paneer Do Pyaza - 300 / 180 
+Paneer Malai Methi - 290 / 180 
+Paneer Kali Mirch - 290 / 180 
+MAIN COURSE (KOFTA)
+Punjabi Veg Kofta - 250 / 170 
+Malai Kofta - 260 / 180 
+Palak Kofta - 250 / 170 
+Paneer Makhni Kofta - 260 / 180 
+Delight Kofta - 250 / 170 
+MAIN COURSE (MUSHROOM)
+Mushroom Masala - 250 / 170 
+Mushroom Do Pyaza - 300 / 180 
+Matar Mushroom - 250 / 170 
+MAIN COURSE (CHAAP)
+Malai Chaap - 250 / 00 
+Afghani Chaap - 250 / 00 
+Lemon Chaap - 250 / 00 
+Tandoori Chaap - 250 / 00 
+DRY VEGETABLES & SPECIAL CURRIES
+Diwani Handi - 220 / 140 
+Gobhi Masala - 200 / 120 
+Aloo Jeera - 180 / 100 
+Aloo Gobhi Masala - 200 / 110 
+Methi Malai Matar - 240 / 160 
+Navrattan Korma - 280 / 200 
+Dum Alloo Kashmiri - 180 / 100 
+Chaap Tikka Butter Masala - 250 / 00 
+RICE KI BAHAR
+Steamed Rice - 180 
+Jeera Rice - 190 
+Matar Pulao - 200 
+Veg Subz Pulao - 220 
+Kashmiri Pulao - 250 
+BIRYANI
+Ashoka Special Dum Biryani - 300 
+Veg Subzi Biryani - 250 
+Paneer Ki Biryani - 250 
+Chaap Biryani - 250 
+Hyderabadi Biryani - 250 
+BREADS
+Roti - 20 
+Missi Roti - 45 
+Missi Roti with Onion - 50 
+Butter Roti - 30 
+Butter Roti with Onion - 35 
+Pyaz Prantha - 00 
+Lachha Parantha - 55 
+Pudina Parantha - 65 
+Chilli Parantha - 65 
+Plain Naan - 55 
+Butter Naan - 50 
+Cheese Naan - 120 
+Garlic Naan - 90 
+Cheese Garlic Naan - 120 
+Stuff Naan - 160 
+Kashmiri Naan - 70 
+Stuffed Parantha & Kulcha - 100 
+Chur Chur Naan - 100 
+Garlic Onion Roti - 50 
+RAITA
+Mint Raita - 150 
+Plain Curd - 100 
+Mix Raita - 150 
+Pahadi Tadka Raita - 150 
+Pineapple Raita - 150 
+Tadka Raita - 150 
+Boondi Raita - 150 
+DESSERT
+Kesar Kheer - 150 
+Winter Special Moong Halwa/Gajrela - 150 
+Brownie with Ice Cream - 180 
+In Sizzler - 00 
+Gulab Jamun (Desi Ghee) - 60 
+Tutti Frutti Ice Cream - 170 
+Assorted Ice Cream - 105 
+INDIAN CHAAT
+Tikki - 00 
+Gol Gappe - 00 
+Raj Kachori - 00 
+Dahi Bhalle - 00 
+Maggie - 00 
+SOUTH INDIAN
+Plain Dosa - 00 
+Masala Dosa - 00 
+Onion Dosa - 00 
+Paneer Dosa - 00 
+Idly - 00 
+Sambhar - 00 
+DRINKS
+Mojito - 00 
+Tea - 00 
+Coffee - 00 
+Shake - 00`;
+
+        // === PARSER & STATE ===
+        const menuData = {};
+        let currentCat = "";
+        
+        rawData.split('\n').forEach(line => {
+            line = line.trim();
+            if (!line) return;
+            
+            if (!line.includes('-')) {
+                currentCat = line;
+                menuData[currentCat] = [];
+            } else {
+                const parts = line.split('-');
+                const price = parts.pop().trim();
+                const name = parts.join('-').trim();
+                menuData[currentCat].push({ name, price, category: currentCat });
+            }
+        });
+
+        let cart = [];
+
+        // === AUTO DESCRIPTION GENERATOR ===
+        function getPremiumDesc(name, category) {
+            const lName = name.toLowerCase();
+            const lCat = category.toLowerCase();
+            if(lName.includes('paneer')) return "Succulent premium cottage cheese crafted with authentic spices and rich herbs.";
+            if(lCat.includes('soup')) return "A warm, comforting bowl prepared with the finest ingredients and balanced flavors.";
+            if(lCat.includes('pizza') || lCat.includes('pasta')) return "Classic Italian flavors with a touch of modern culinary excellence.";
+            if(lCat.includes('tandoor') || lName.includes('tikka') || lName.includes('chaap')) return "Marinated in exquisite spices and slow-roasted to smoky perfection in our traditional clay oven.";
+            if(lCat.includes('dessert')) return "A decadent, sweet conclusion to elevate your dining experience.";
+            if(lCat.includes('bread')) return "Freshly baked Indian breads, soft and aromatic, straight from the tandoor.";
+            if(lCat.includes('rice') || lCat.includes('biryani')) return "Fragrant, long-grain premium basmati cooked flawlessly with aromatic whole spices.";
+            if(lCat.includes('chinese') || lCat.includes('noodle')) return "Authentic pan-Asian flavors tossed with fresh vegetables and signature sauces.";
+            return "Prepared fresh with hand-picked ingredients for a truly luxurious taste.";
+        }
+
+        // === RENDER MENU ===
+        function renderMenu() {
+            const tabsContainer = document.getElementById('category-tabs');
+            const menuContainer = document.getElementById('menu-container');
+            
+            tabsContainer.innerHTML = '';
+            menuContainer.innerHTML = '';
+
+            Object.keys(menuData).forEach((cat, index) => {
+                // Generate Tab
+                const tabId = cat.replace(/\s+/g, '-').toLowerCase();
+                tabsContainer.innerHTML += `<button class="tab-btn ${index === 0 ? 'active' : ''}" onclick="scrollToCat('${tabId}')">${cat}</button>`;
+
+                // Generate Section
+                let sectionHTML = `
+                    <div id="${tabId}" class="category-section">
+                        <h2 class="category-title">${cat}</h2>
+                        <div class="menu-grid">
+                `;
+
+                menuData[cat].forEach((item, itemIdx) => {
+                    const itemId = `${tabId}-${itemIdx}`;
+                    const desc = getPremiumDesc(item.name, cat);
+                    
+                    // Handle dual prices (e.g., 250 / 150)
+                    let priceDisplay = '';
+                    let isDual = item.price.includes('/');
+                    
+                    if(isDual) {
+                        const prices = item.price.split('/').map(p => p.trim());
+                        priceDisplay = `
+                            <select class="dual-price-select" id="price-${itemId}">
+                                <option value="${prices[0]}">Full - ₹${prices[0]}</option>
+                                <option value="${prices[1]}">Half - ₹${prices[1]}</option>
+                            </select>
+                        `;
+                    } else {
+                        priceDisplay = `<div class="item-price">₹${item.price === '00' ? '0' : item.price}</div>`;
+                    }
+
+                    sectionHTML += `
+                        <div class="glass-card menu-item-card" data-name="${item.name.toLowerCase()}">
+                            <div>
+                                <div class="item-header">
+                                    <div class="item-name-box">
+                                        <div class="veg-indicator" title="Vegetarian"></div>
+                                        <div class="item-name">${item.name}</div>
+                                    </div>
+                                    ${!isDual ? priceDisplay : ''}
+                                </div>
+                                <div class="item-desc">${desc}</div>
+                                ${isDual ? priceDisplay : ''}
+                            </div>
+                            <div class="item-actions">
+                                <div class="qty-control">
+                                    <button class="qty-btn" onclick="updateQty('${itemId}', -1)">-</button>
+                                    <input type="text" class="qty-input" id="qty-${itemId}" value="1" readonly>
+                                    <button class="qty-btn" onclick="updateQty('${itemId}', 1)">+</button>
+                                </div>
+                                <button class="add-btn" onclick="addToCart('${item.name}', '${itemId}', ${isDual})">Add to Order</button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                sectionHTML += `</div></div>`;
+                menuContainer.innerHTML += sectionHTML;
+            });
+        }
+
+        // === UI INTERACTIONS ===
+        function scrollToCat(id) {
+            document.getElementById(id).scrollIntoView();
+            document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+        }
+
+        function updateQty(id, change) {
+            const input = document.getElementById(`qty-${id}`);
+            let val = parseInt(input.value) + change;
+            if (val < 1) val = 1;
+            input.value = val;
+        }
+
+        function filterMenu() {
+            const q = document.getElementById('search-bar').value.toLowerCase();
+            document.querySelectorAll('.menu-item-card').forEach(card => {
+                const name = card.getAttribute('data-name');
+                if(name.includes(q)) card.style.display = 'flex';
+                else card.style.display = 'none';
+            });
+        }
+
+        function toggleTheme() {
+            const body = document.documentElement;
+            const current = body.getAttribute('data-theme');
+            const target = current === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', target);
+            localStorage.setItem('ashoka_theme', target);
+        }
+
+        // === CART LOGIC ===
+        function toggleCart() {
+            document.getElementById('cart-panel').classList.toggle('active');
+        }
+
+        function addToCart(name, elId, isDual) {
+            const qty = parseInt(document.getElementById(`qty-${elId}`).value);
+            let priceRaw = '';
+            let variantStr = '';
+
+            if(isDual) {
+                const select = document.getElementById(`price-${elId}`);
+                priceRaw = select.value;
+                variantStr = select.options[select.selectedIndex].text.split('-')[0].trim();
+                name = `${name} (${variantStr})`;
+            } else {
+                // Find original price from raw
+                for(let cat in menuData) {
+                    let found = menuData[cat].find(i => i.name === name);
+                    if(found) priceRaw = found.price;
+                }
+            }
+
+            const priceNum = parseInt(priceRaw) || 0;
+
+            const existing = cart.find(i => i.name === name);
+            if(existing) {
+                existing.qty += qty;
+            } else {
+                cart.push({ name, price: priceNum, qty });
+            }
+
+            // Reset UI qty
+            document.getElementById(`qty-${elId}`).value = 1;
+            updateCartUI();
+            
+            // Visual feedback
+            const fab = document.querySelector('.cart-fab');
+            fab.style.transform = 'scale(1.2)';
+            setTimeout(() => fab.style.transform = '', 200);
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const countBadge = document.getElementById('cart-count');
+            const totalEl = document.getElementById('cart-total-price');
+            
+            container.innerHTML = '';
+            let totalQty = 0;
+            let totalPrice = 0;
+
+            if(cart.length === 0) {
+                container.innerHTML = '<p style="color:var(--text-muted); text-align:center; margin-top:20px;">Your cart is empty.</p>';
+            }
+
+            cart.forEach((item, index) => {
+                totalQty += item.qty;
+                const itemTotal = item.qty * item.price;
+                totalPrice += itemTotal;
+
+                container.innerHTML += `
+                    <div class="cart-item">
+                        <div class="cart-item-details">
+                            <div class="cart-item-name">${item.qty}x ${item.name}</div>
+                            <div class="cart-item-price">₹${item.price} each</div>
+                            <button class="remove-btn" onclick="removeFromCart(${index})">Remove</button>
+                        </div>
+                        <div style="font-weight:bold;">₹${itemTotal}</div>
+                    </div>
+                `;
+            });
+
+            countBadge.innerText = totalQty;
+            totalEl.innerText = `₹${totalPrice}`;
+        }
+
+        // === CHECKOUT & MESSAGING ===
+        function openCheckoutModal() {
+            if(cart.length === 0) {
+                alert("Please add items to your order first.");
+                return;
+            }
+            document.getElementById('checkout-modal').classList.add('active');
+            toggleCart();
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.remove('active');
+        }
+
+        function submitOrder(method) {
+            const name = document.getElementById('cust-name').value.trim();
+            const table = document.getElementById('cust-table').value.trim();
+            
+            if(!name || !table) {
+                alert("Please enter your Name and Table/Room number.");
+                return;
+            }
+
+            let totalPrice = cart.reduce((sum, item) => sum + (item.qty * item.price), 0);
+            
+            let msg = `*Hello, I want to order from Ashoka Hotel:*\n\n`;
+            msg += `*Name:* ${name}\n`;
+            msg += `*Table / Room No:* ${table}\n\n`;
+            msg += `*Order Details:*\n`;
+            
+            cart.forEach(item => {
+                msg += `▪ ${item.qty}x ${item.name} - ₹${item.qty * item.price}\n`;
+            });
+            
+            msg += `\n*Total Amount:* ₹${totalPrice}`;
+
+            const encodedMsg = encodeURIComponent(msg);
+
+            if(method === 'whatsapp') {
+                window.open(`https://wa.me/918818004499?text=${encodedMsg}`, '_blank');
+            } else if (method === 'email') {
+                window.location.href = `mailto:ashokahoteljind@gmail.com?subject=New Food Order - Table/Room ${table}&body=${encodedMsg}`;
+            }
+
+            closeCheckoutModal();
+        }
+
+        // === INIT ===
+        window.onload = () => {
+            // Check Theme
+            const savedTheme = localStorage.getItem('ashoka_theme');
+            if(savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+            
+            renderMenu();
+            updateCartUI();
+        };
+    </script>
+</body>
+</html>
